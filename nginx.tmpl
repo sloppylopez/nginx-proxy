@@ -5,11 +5,19 @@
 		{{/* If we got the containers from swarm and this container's port is published to host, use host IP:PORT */}}
 		{{ if and .Container.Node.ID .Address.HostPort }}
 			# {{ .Container.Node.Name }}/{{ .Container.Name }}
+			# option1 {{ .Address }}
 			server {{ .Container.Node.Address.IP }}:{{ .Address.HostPort }};
 		{{/* If there is no swarm node or the port is not published on host, use container's IP:PORT */}}
 		{{ else if .Network }}
 			# {{ .Container.Name }}
+            # option2 {{ .Address }}
 			server {{ .Network.IP }}:{{ .Address.Port }};
+			server {{ .Network.IP }}:3000;
+			server {{ .Network.IP }}:3000;
+			server {{ .Network.IP }}:3001;
+			server {{ .Network.IP }}:8081;
+			server {{ .Network.IP }}:8083;
+server {{ .Network.IP }}:{{ .Address.Port }};
 		{{ end }}
 	{{ else if .Network }}
 		# {{ .Container.Name }}
